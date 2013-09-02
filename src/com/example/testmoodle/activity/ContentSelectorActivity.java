@@ -1,4 +1,4 @@
-package com.example.testmoodle;
+package com.example.testmoodle.activity;
 
 public class ContentSelectorActivity {
 

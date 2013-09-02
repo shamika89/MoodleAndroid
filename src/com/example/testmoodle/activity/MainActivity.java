@@ -1,4 +1,4 @@
-package com.example.testmoodle;
+package com.example.testmoodle.activity;
 
 
 import java.io.UnsupportedEncodingException;
@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.testmoodle.R;
 import com.example.testmoodle.helper.AppStatus;
 import com.example.testmoodle.helper.TokenHttpRequest;
 import com.example.testmoodle.helper.WebServiceCommunicator;

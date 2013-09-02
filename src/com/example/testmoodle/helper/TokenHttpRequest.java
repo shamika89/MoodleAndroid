@@ -10,7 +10,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.testmoodle.MainActivity;
+import com.example.testmoodle.activity.MainActivity;
 import com.example.testmoodle.util.User;
 
 import android.content.Context;

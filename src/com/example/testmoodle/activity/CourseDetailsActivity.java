@@ -1,9 +1,10 @@
-package com.example.testmoodle;
+package com.example.testmoodle.activity;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.testmoodle.R;
 import com.example.testmoodle.util.Course;
 import com.example.testmoodle.util.User;
 

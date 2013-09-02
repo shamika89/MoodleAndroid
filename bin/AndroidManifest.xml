@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.testmoodle.MainActivity"
+            android:name="com.example.testmoodle.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
       <activity
-            android:name="com.example.testmoodle.CourseDetailsActivity" android:configChanges="orientation" android:label="Moodle Course listing" >
+            android:name="com.example.testmoodle.activity.CourseDetailsActivity" android:configChanges="orientation" android:label="Moodle Course listing" >
         </activity>
     </application>
 
