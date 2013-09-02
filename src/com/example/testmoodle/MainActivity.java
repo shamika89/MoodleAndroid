@@ -9,13 +9,13 @@ import java.util.concurrent.ExecutionException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.testmoole.util.Course;
-import com.example.testmoole.util.SiteInfo;
-import com.example.testmoole.util.User;
-import com.exaple.testmoodle.helper.AppStatus;
-import com.exaple.testmoodle.helper.TokenHttpRequest;
-import com.exaple.testmoodle.helper.WebServiceCommunicator;
-import com.exaple.testmoodle.helper.WebserviceFunction;
+import com.example.testmoodle.helper.AppStatus;
+import com.example.testmoodle.helper.TokenHttpRequest;
+import com.example.testmoodle.helper.WebServiceCommunicator;
+import com.example.testmoodle.helper.WebserviceFunction;
+import com.example.testmoodle.util.Course;
+import com.example.testmoodle.util.SiteInfo;
+import com.example.testmoodle.util.User;
 
 import android.os.Bundle;
 import android.os.Handler;

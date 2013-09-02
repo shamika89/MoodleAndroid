@@ -3,8 +3,10 @@ package com.example.testmoodle;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.testmoole.util.Course;
-import com.example.testmoole.util.User;
+
+import com.example.testmoodle.util.Course;
+import com.example.testmoodle.util.User;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
