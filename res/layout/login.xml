@@ -29,11 +29,12 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
            
-            android:inputType="textPassword"
+            android:inputType="text"
             android:paddingBottom="8dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="8dp"
+            android:hint="server url"
              />
         <EditText
             android:id="@+id/usernameEditText"
@@ -47,7 +48,7 @@
             android:paddingBottom="8dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-             >
+            android:hint="username" >
 
             <requestFocus />
         </EditText>
@@ -65,6 +66,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="8dp"
+            android:hint="password"
              />
 
        

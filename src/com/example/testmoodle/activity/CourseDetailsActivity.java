@@ -1,6 +1,7 @@
 package com.example.testmoodle.activity;
 
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +18,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class CourseDetailsActivity extends Activity {
-	User user;
-	ListView courselist;
+	private User user;
+	private ListView courselist;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class CourseDetailsActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Course values = array.get(position);
+			final int id=values.getId();
 			LayoutInflater inflater = (LayoutInflater) context .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View rowView;
 
@@ -101,6 +104,18 @@ public class CourseDetailsActivity extends Activity {
 				myCourse.setBackgroundResource(R.drawable.listview_item_differentiate_color);
 
 			rowView.setClickable(true);
+			
+			rowView.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View v) {
+					final int REQUEST_CODE = id;
+					Intent i = new Intent(context, ContentSelectorActivity.class);
+					user.setSelectedCourseID(id);
+					i.putExtra("userObject", user); 
+					startActivity(i);
+
+				}
+			});
 	        return rowView;
 		}
 }

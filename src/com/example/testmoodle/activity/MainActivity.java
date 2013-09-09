@@ -39,13 +39,14 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ProgressDialog dialog;
 	private String url,siteURLVal,passwordVal,usernameVal;
 	private User user;
-	String token;
+	private String token;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.login_activity);
-		
+		setContentView(R.layout.login);
+		/*setContentView(R.layout.login_activity);
+	
 		siteURl= (EditText) findViewById(R.id.siteURL);
 		username= (EditText) findViewById(R.id.userName);
 		password=(EditText) findViewById(R.id.password);
@@ -53,7 +54,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		siteURl.setHint("Site URL");
 		username.setHint("Username");
-		password.setHint("Password");
+		password.setHint("Password");*/
+		
+		siteURl= (EditText) findViewById(R.id.serverurlText);
+		username= (EditText) findViewById(R.id.usernameEditText);
+		password=(EditText) findViewById(R.id.passwordEditText);
+		login=(Button) findViewById(R.id.loginButton);
+		
 		
 		siteURl.setText("http://10.0.2.2/moodle");
 		username.setText("shamika");

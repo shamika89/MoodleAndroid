@@ -27,6 +27,9 @@
       <activity
             android:name="com.example.testmoodle.activity.CourseDetailsActivity" android:configChanges="orientation" android:label="Moodle Course listing" >
         </activity>
+         <activity
+            android:name="com.example.testmoodle.activity.ContentSelectorActivity" android:configChanges="orientation" android:label="Course Content listing" >
+        </activity>
     </application>
 
 </manifest>

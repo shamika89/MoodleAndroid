@@ -25,28 +25,35 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int bg=0x7f020000;
-        public static final int bgrepeat=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int listview_item_differentiate_color=0x7f020003;
-        public static final int listviewitem=0x7f020004;
-        public static final int mdroid=0x7f020005;
-        public static final int moodle=0x7f020006;
-        public static final int orangebtn=0x7f020007;
+        public static final int assignment=0x7f020000;
+        public static final int bg=0x7f020001;
+        public static final int bgrepeat=0x7f020002;
+        public static final int document=0x7f020003;
+        public static final int grades=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int listview_item_differentiate_color=0x7f020006;
+        public static final int listviewitem=0x7f020007;
+        public static final int moodle=0x7f020008;
+        public static final int orangebtn=0x7f020009;
     }
     public static final class id {
-        public static final int MDroidLogoimageView=0x7f0a0002;
-        public static final int action_settings=0x7f0a000b;
-        public static final int button1=0x7f0a000a;
-        public static final int loginButton=0x7f0a0006;
-        public static final int myCourses=0x7f0a0000;
-        public static final int myCoursesName=0x7f0a0001;
-        public static final int password=0x7f0a0007;
-        public static final int passwordEditText=0x7f0a0005;
-        public static final int serverurlText=0x7f0a0003;
-        public static final int siteURL=0x7f0a0008;
-        public static final int userName=0x7f0a0009;
-        public static final int usernameEditText=0x7f0a0004;
+        public static final int MDroidLogoimageView=0x7f0a0007;
+        public static final int action_settings=0x7f0a0010;
+        public static final int assignments=0x7f0a0004;
+        public static final int button1=0x7f0a000f;
+        public static final int documents=0x7f0a0002;
+        public static final int grades=0x7f0a0003;
+        public static final int loginButton=0x7f0a000b;
+        public static final int myCourses=0x7f0a0005;
+        public static final int myCoursesName=0x7f0a0006;
+        public static final int password=0x7f0a000c;
+        public static final int passwordEditText=0x7f0a000a;
+        public static final int selectcourse=0x7f0a0000;
+        public static final int selectedCourse=0x7f0a0001;
+        public static final int serverurlText=0x7f0a0008;
+        public static final int siteURL=0x7f0a000d;
+        public static final int userName=0x7f0a000e;
+        public static final int usernameEditText=0x7f0a0009;
     }
     public static final class layout {
         public static final int course_selector_activity=0x7f030000;

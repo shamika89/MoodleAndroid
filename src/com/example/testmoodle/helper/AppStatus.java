@@ -7,10 +7,10 @@ import android.util.Log;
 
 public class AppStatus {
 	 private static AppStatus instance = new AppStatus();
-	    static Context context;
-	    ConnectivityManager connectivityManager;
-	    NetworkInfo wifiInfo, mobileInfo;
-	    boolean connected = false;
+	 private static Context context;
+	 private  ConnectivityManager connectivityManager;
+	 private  NetworkInfo wifiInfo, mobileInfo;
+	 private boolean connected = false;
 
 	    public static AppStatus getInstance(Context ctx) {
 	        context = ctx;
