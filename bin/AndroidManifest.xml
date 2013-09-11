@@ -30,6 +30,12 @@
          <activity
             android:name="com.example.testmoodle.activity.ContentSelectorActivity" android:configChanges="orientation" android:label="Course Content listing" >
         </activity>
+         <activity
+            android:name="com.example.testmoodle.activity.ContentSelector" android:configChanges="orientation" android:label="Course Content listing" >
+        </activity>
+         <activity
+            android:name="com.example.testmoodle.activity.CourseDocumentView" android:configChanges="orientation" android:label="Course Document listing" >
+        </activity>
     </application>
 
 </manifest>

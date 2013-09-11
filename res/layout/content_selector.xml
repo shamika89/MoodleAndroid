@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="@color/bg_color" >
+    
+	<LinearLayout android:id="@+id/hdr_coursework_item_view" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:weightSum="1" 
+	    android:background="#999966">
+	    
+        <EditText 
+            android:id="@+id/selectedCourse"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:inputType="text"
+            android:textColor="#333300"
+            android:textSize="20sp" />
+        
+    </LinearLayout>
+    
+	<LinearLayout
+	     android:layout_below="@+id/hdr_coursework_item_view"  
+	     android:layout_above="@+id/footer_view" 
+	     android:id="@android:id/tabcontent" 
+	     android:text="@string/course_overview" 
+	     android:paddingLeft="0dp" 
+	     android:paddingRight="0dp" 
+	     android:layout_width="fill_parent" 
+	     android:layout_height="fill_parent" 
+	     android:orientation="vertical" >
+        
+   <ListView 
+	    android:id="@+id/myContets"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="@drawable/listviewitem"
+	    android:divider="#9aa0a0"
+	    android:dividerHeight="0.8dp"
+	    android:fastScrollEnabled="true"
+	    android:orientation="vertical"
+	    android:fadingEdgeLength="1dp"
+	    android:cacheColorHint="#00000000" >
+	</ListView>
+    </LinearLayout>
+	
+	<include android:id="@+id/footer_view" layout="@layout/footer_navigation" />
+	
+</RelativeLayout>

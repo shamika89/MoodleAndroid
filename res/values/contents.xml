@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="contents">
+        <item name="documents">Documents</item>
+          <item name="assignments">Assignments</item>
+            <item name="grades">Grades</item>
+    </string-array>
+</resources>

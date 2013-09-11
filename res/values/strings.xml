@@ -7,6 +7,10 @@
     <string name="LoginButton">Login</string>
     <color name="red">#CF2900</color>
     <color name="bg_color">#E1E1E1</color>
+    <string name="courses_view">Courses</string>
+    <string name="back">Back</string>
+    <string name="logout">Logout</string>
+    <string name="course_overview">Overview</string>
    
 
 </resources>

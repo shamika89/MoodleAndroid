@@ -4,6 +4,9 @@
     <item android:state_pressed="true"><shape>
             <solid android:color="#B6B6B6" />
         </shape></item>
-    <item android:drawable="@color/bg_color"></item>
-
+    
+	<item><shape>
+            <solid android:color="@color/bg_color" />
+        </shape></item>
+    
 </selector>

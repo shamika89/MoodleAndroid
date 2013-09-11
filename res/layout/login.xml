@@ -72,14 +72,15 @@
        
         <Button
             android:id="@+id/loginButton"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/orangebtn"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="@string/LoginButton"
-            android:textColor="@color/red" />
+            android:textColor="@color/red"
+            android:textStyle="bold" />
  			
        
     </LinearLayout>

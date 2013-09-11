@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_color"
+    android:gravity="top"
+    android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/contentImageview"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="documentsImage"
+            android:src="@drawable/document"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+        />
+
+        <TextView
+            android:id="@+id/cotentTitleTextview"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:clickable="true"
+            android:gravity="left|center_vertical"
+            android:text="Documents"
+            android:textColor="#3f3f3f"
+            android:textSize="20sp"
+             android:focusable="false"
+            android:focusableInTouchMode="false" />
+    
+</LinearLayout>
