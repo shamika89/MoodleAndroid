@@ -15,6 +15,8 @@ public final class R {
     }
     public static final class color {
         public static final int bg_color=0x7f080001;
+        public static final int black_color=0x7f080003;
+        public static final int light_pink=0x7f080002;
         public static final int red=0x7f080000;
     }
     public static final class dimen {
@@ -31,60 +33,82 @@ public final class R {
         public static final int assignment=0x7f020000;
         public static final int bg=0x7f020001;
         public static final int bgrepeat=0x7f020002;
-        public static final int document=0x7f020003;
-        public static final int grades=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int listview_item_differentiate_color=0x7f020006;
-        public static final int listviewitem=0x7f020007;
-        public static final int moodle=0x7f020008;
-        public static final int orangebtn=0x7f020009;
+        public static final int bluebtn=0x7f020003;
+        public static final int document=0x7f020004;
+        public static final int forums=0x7f020005;
+        public static final int grades=0x7f020006;
+        public static final int greenbtn=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int listview_item_differentiate_color=0x7f020009;
+        public static final int listviewitem=0x7f02000a;
+        public static final int moodle=0x7f02000b;
+        public static final int orangebtn=0x7f02000c;
     }
     public static final class id {
-        public static final int MDroidLogoimageView=0x7f0b0011;
-        public static final int action_settings=0x7f0b001a;
-        public static final int assignments=0x7f0b0009;
-        public static final int back=0x7f0b0010;
-        public static final int button1=0x7f0b0019;
-        public static final int contentImageview=0x7f0b0004;
-        public static final int cotentTitleTextview=0x7f0b0005;
-        public static final int coursework_overview=0x7f0b000d;
-        public static final int documents=0x7f0b0007;
-        public static final int footer_menu_view=0x7f0b000c;
-        public static final int footer_view=0x7f0b0002;
-        public static final int grades=0x7f0b0008;
-        public static final int hdr_coursework_item_view=0x7f0b0000;
-        public static final int loginButton=0x7f0b0015;
-        public static final int logout=0x7f0b000f;
-        public static final int myContets=0x7f0b0003;
-        public static final int myCourses=0x7f0b000a;
-        public static final int myCoursesName=0x7f0b000b;
-        public static final int password=0x7f0b0016;
-        public static final int passwordEditText=0x7f0b0014;
-        public static final int select_course=0x7f0b000e;
-        public static final int selectcourse=0x7f0b0006;
-        public static final int selectedCourse=0x7f0b0001;
-        public static final int serverurlText=0x7f0b0012;
-        public static final int siteURL=0x7f0b0017;
-        public static final int userName=0x7f0b0018;
-        public static final int usernameEditText=0x7f0b0013;
+        public static final int LoadingProgressImage=0x7f0b0012;
+        public static final int LoadingProgressText=0x7f0b0011;
+        public static final int MDroidLogoimageView=0x7f0b0021;
+        public static final int action_settings=0x7f0b0026;
+        public static final int assignments=0x7f0b000d;
+        public static final int back=0x7f0b001c;
+        public static final int contentImageview=0x7f0b0008;
+        public static final int cotentTitleTextview=0x7f0b0009;
+        public static final int course_assignment_empty=0x7f0b0003;
+        public static final int course_assignment_listview=0x7f0b0000;
+        public static final int course_forum_listview=0x7f0b001d;
+        public static final int course_forumitem_empty=0x7f0b001f;
+        public static final int coursework_overview=0x7f0b0019;
+        public static final int documents=0x7f0b000b;
+        public static final int footer_menu_view=0x7f0b0018;
+        public static final int footer_view=0x7f0b0001;
+        public static final int forumName=0x7f0b0020;
+        public static final int grades=0x7f0b000c;
+        public static final int hdr_coursework_item_view=0x7f0b0005;
+        public static final int linearLayoutLoadingResourses=0x7f0b0010;
+        public static final int linearLayoutlistview=0x7f0b0013;
+        public static final int loginButton=0x7f0b0025;
+        public static final int logout=0x7f0b001b;
+        public static final int myAssignmentName=0x7f0b0004;
+        public static final int myAssignments=0x7f0b0002;
+        public static final int myContets=0x7f0b0007;
+        public static final int myCourses=0x7f0b000e;
+        public static final int myCoursesName=0x7f0b000f;
+        public static final int myFileButton=0x7f0b0017;
+        public static final int myFileDownloadStatus=0x7f0b0016;
+        public static final int myFileName=0x7f0b0015;
+        public static final int myFiles=0x7f0b0014;
+        public static final int myForums=0x7f0b001e;
+        public static final int passwordEditText=0x7f0b0024;
+        public static final int select_course=0x7f0b001a;
+        public static final int selectcourse=0x7f0b000a;
+        public static final int selectedCourse=0x7f0b0006;
+        public static final int serverurlText=0x7f0b0022;
+        public static final int usernameEditText=0x7f0b0023;
     }
     public static final class layout {
-        public static final int content_selector=0x7f030000;
-        public static final int contentslector_listview_layout=0x7f030001;
-        public static final int course_selector_activity=0x7f030002;
-        public static final int courselist_activity=0x7f030003;
-        public static final int courselistview_layout=0x7f030004;
-        public static final int footer_navigation=0x7f030005;
-        public static final int login=0x7f030006;
-        public static final int login_activity=0x7f030007;
+        public static final int assignment_listing=0x7f030000;
+        public static final int assignmentlistview_layout=0x7f030001;
+        public static final int content_selector=0x7f030002;
+        public static final int contentslector_listview_layout=0x7f030003;
+        public static final int course_selector_activity=0x7f030004;
+        public static final int courselist_activity=0x7f030005;
+        public static final int courselistview_layout=0x7f030006;
+        public static final int filelisting=0x7f030007;
+        public static final int filelistview_layout=0x7f030008;
+        public static final int footer_navigation=0x7f030009;
+        public static final int forum_listing=0x7f03000a;
+        public static final int forumlistview_layout=0x7f03000b;
+        public static final int login=0x7f03000c;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
     }
     public static final class raw {
-        public static final int courseinfo=0x7f040000;
-        public static final int coursesxsl=0x7f040001;
-        public static final int siteinfoxsl=0x7f040002;
+        public static final int assignments=0x7f040000;
+        public static final int contentxsl=0x7f040001;
+        public static final int courseinfo=0x7f040002;
+        public static final int coursesxsl=0x7f040003;
+        public static final int siteinfoxsl=0x7f040004;
     }
     public static final class string {
         public static final int LoginButton=0x7f070003;
@@ -93,6 +117,9 @@ public final class R {
         public static final int back=0x7f070005;
         public static final int course_overview=0x7f070007;
         public static final int courses_view=0x7f070004;
+        public static final int dowload=0x7f07000a;
+        public static final int download_state=0x7f070008;
+        public static final int empty_content=0x7f070009;
         public static final int hello_world=0x7f070002;
         public static final int logout=0x7f070006;
     }

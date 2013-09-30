@@ -9,10 +9,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.example.testmoodle.activity.MainActivity;
 import com.example.testmoodle.util.User;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -28,8 +26,9 @@ public class TokenHttpRequest extends AsyncTask<Object, Object, JSONObject> {
 	private User user;
 
 
-	public TokenHttpRequest(MainActivity activity) {
+	public TokenHttpRequest(MainActivity activity, Context context) {
 		this.activity = activity;
+		this.context=context;
      }
 	
 	@Override
@@ -40,25 +39,22 @@ public class TokenHttpRequest extends AsyncTask<Object, Object, JSONObject> {
 		
 		String responseBody = "";
 
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-
-		// Creating HTTP Post
-		HttpGet httpPost = new HttpGet(tokenUrl);
+		DefaultHttpClient httpClient = new DefaultHttpClient(); //creating HTTP client
+		HttpGet httpPost = new HttpGet(tokenUrl); // Creating HTTP Post
 		Log.d("LoggingTracker", tokenUrl);
 		try {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = httpClient.execute(httpPost, responseHandler);
-
 			JSONObject json = new JSONObject(responseBody);
-			
 			return json;
 		} catch (ClientProtocolException e) {
-			// writing exception to log
+			Log.d("Exception", "ClientProtocolException "+e.toString());// writing exception to log
 			e.printStackTrace();
 		} catch (IOException e) {
-			// writing exception to log
+			Log.d("Exception", "IOException "+e.toString());// writing exception to log
 			e.printStackTrace();
 		} catch (Exception e) {
+			Log.d("Exception", "Exception "+e.toString());// writing exception to log
 			e.printStackTrace();
 		}
 		return null;
@@ -67,18 +63,17 @@ public class TokenHttpRequest extends AsyncTask<Object, Object, JSONObject> {
 	@Override
 	public void onPostExecute(JSONObject jsonObject) {
 		try {
-			Log.d("Logging Tracker", "Got a new token : " + jsonObject.getString("token"));
+			Log.d("TokenHttpRequest", "Got a new token : " + jsonObject.getString("token"));
 			//Toast.makeText(context, "token received", Toast.LENGTH_SHORT).show();
 			user.setToken(jsonObject.getString("token"));
 			activity.getSiteInfo();
 		} catch (JSONException e) {
-			Log.d("Logging Tracker", "JSON Exception, setting token to null");
-			
+			Toast.makeText(context, "Username or Password mayy incorrect. Please Recheck", Toast.LENGTH_SHORT).show();
+			Log.d("TokenHttpRequest", "JSON Exception "+e.toString());
 			e.printStackTrace();
 		} catch (Exception e) {
-			Log.d("Logging Tracker", "Something else went wrong while authenticating");
+			Log.d("TokenHttpRequest", "Something went wrong while authenticating");
 			Toast.makeText(context, "Logging Incorrect", Toast.LENGTH_SHORT).show();
-			
 			e.printStackTrace();
 		}
 	}

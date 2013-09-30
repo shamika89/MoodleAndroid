@@ -1,12 +1,10 @@
 package com.example.testmoodle.util;
 
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+
 
 public class SiteInfo implements Parcelable {
 	private String siteName;
@@ -86,13 +84,10 @@ public class SiteInfo implements Parcelable {
 	    	try {  
 	    		
 	    		if (jsonObject != null) {
-	    		
+	    			//extract details from JSon object and setting values of attributes
 		    		String sitename = jsonObject.getString("sitename"); 
-		    		
 		    		this.setSiteName(sitename);
-		    		Log.v("LoggingTracker", sitename);
-		    		Log.v("LoggingTracker", "Hiiiiiiiiiiii");
-			        String username = jsonObject.getString("username"); 
+		    		String username = jsonObject.getString("username"); 
 			        this.setUsername(username);
 			        String firstname = jsonObject.getString("firstname"); 
 			        this.setFirstName(firstname);
@@ -102,8 +97,6 @@ public class SiteInfo implements Parcelable {
 			        this.setFullName(fullname);
 			        String userid = jsonObject.getString("userid"); 
 			        this.setUserID(Integer.valueOf(userid));
-			        Log.d("LoggingTracker", sitename);
-			        Log.d("LoggingTracker", userid);
 			        String siteurl = jsonObject.getString("siteurl"); 
 			        this.setSiteURL(siteurl);
 			        String userpictureurl = jsonObject.getString("userpictureurl"); 
@@ -111,16 +104,7 @@ public class SiteInfo implements Parcelable {
 			        String downloadfiles = jsonObject.getString("downloadfiles"); 
 			        this.setDownloadFiles((downloadfiles.equals("1")) ? Boolean.TRUE : Boolean.FALSE);
 			 	    
-			     /*   JSONArray functions = jsonObject.getJSONArray("functions");
-		    	    // looping through All Contacts 
-		    	    for(int i = 0; i < functions.length(); i++){ 
-		    	        JSONObject c = functions.getJSONObject(i); 
-		    	 
-		    	        // Storing each json item in variable 
-		    	        String name = c.getString("name"); 
-		    	        String version = c.getString("version");   
-		    	        this.addFunction(name, version);
-		    	    }*/
+			
 		    	    
 	    		}
 	    	} catch (JSONException e) { 
@@ -131,7 +115,7 @@ public class SiteInfo implements Parcelable {
 	        return 0; 
 	    } 
 	    
-	 // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods 
+	 // This is used to regenerate the object. All Parcelables must have a CREATOR that implements these two methods 
 	    public static final Parcelable.Creator<SiteInfo> CREATOR = new Parcelable.Creator<SiteInfo>() { 
 	        public SiteInfo createFromParcel(Parcel in) { 
 	            return new SiteInfo(in); 
@@ -142,7 +126,7 @@ public class SiteInfo implements Parcelable {
 	        } 
 	    }; 
 	 
-	    // write your object's data to the passed-in Parcel 
+	    // write the object's data to the passed-in Parcel 
 	    public void writeToParcel(Parcel dest, int flags) { 
 	    	dest.writeString(siteName);
 	    	dest.writeString(username);
@@ -153,12 +137,7 @@ public class SiteInfo implements Parcelable {
 	    	dest.writeString(siteURL);
 	    	dest.writeString(userPictureURL);
 	    	dest.writeByte((byte) (downloadFiles ? 1 : 0));  
-	    	
-	    /*	dest.writeInt(functions.size());
-	        for (String s: functions.keySet()) {
-	            dest.writeString(s);
-	            dest.writeString(functions.get(s));
-	        }*/
+	  
 
 	    }
 	    
@@ -173,12 +152,7 @@ public class SiteInfo implements Parcelable {
 	        this.userPictureURL = in.readString();
 	        this.downloadFiles = in.readByte() == 1;
 
-	     /*   int count = in.readInt();
-	        for (int i = 0; i < count; i++) {
-	        	this.addFunction(in.readString(), in.readString());
-	        }*/
-	    
-	
+	   
 }
 		public SiteInfo() {
 			// TODO Auto-generated constructor stub

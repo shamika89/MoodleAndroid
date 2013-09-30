@@ -27,6 +27,17 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:if>
+				<xsl:if test="(not(VALUE/node()) or VALUE/node() = '') and @name != 'functions' ">
+				<xsl:choose>
+					<xsl:when test="position() = last()">
+						<xsl:text>null} </xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>null </xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
+			
 				
 				
 				<xsl:if test="@name = 'functions'">
@@ -59,7 +70,7 @@
 					<xsl:text>], </xsl:text>
 				</xsl:if>
 			</xsl:for-each>
-			<xsl:text>null}</xsl:text>
+			
 		</xsl:copy>
 	</xsl:template>	
 	

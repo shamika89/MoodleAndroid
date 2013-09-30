@@ -3,6 +3,6 @@
     <string-array name="contents">
         <item name="documents">Documents</item>
           <item name="assignments">Assignments</item>
-            <item name="grades">Grades</item>
+            <item name="forums">Forums</item>
     </string-array>
 </resources>

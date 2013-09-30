@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical" >
+
+
+      <LinearLayout
+          android:id="@+id/course_forum_listview"
+          android:layout_above="@+id/footer_view" 
+       	  android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/bg_color"
+          android:orientation="vertical" >
+
+          <ListView
+              android:id="@+id/myForums"
+              android:layout_width="fill_parent"
+              android:layout_height="410dp"
+              android:background="@drawable/listviewitem"
+              android:cacheColorHint="#00000000"
+              android:divider="#9aa0a0"
+              android:dividerHeight="0.8dp"
+              android:fadingEdgeLength="1dp"
+              android:fastScrollEnabled="true"
+              android:orientation="vertical" >
+          </ListView>
+
+    </LinearLayout>
+    
+   <LinearLayout 
+        android:id="@+id/course_forumitem_empty" 
+        android:layout_above="@+id/footer_view"        
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical"	    
+        android:visibility="invisible">
+        
+	    <TextView    	        
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"     
+	        android:text="@string/empty_content"
+	        android:textColor="@color/red"
+	        android:gravity="center"/>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/footer_view"
+        layout="@layout/footer_navigation" />
+
+</RelativeLayout>

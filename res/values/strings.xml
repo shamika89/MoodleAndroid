@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TestMoodle</string>
+    <string name="app_name">MoodleAndroid</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="LoginButton">Login</string>
@@ -11,6 +11,11 @@
     <string name="back">Back</string>
     <string name="logout">Logout</string>
     <string name="course_overview">Overview</string>
+    <string name="download_state">Downloading contents.. Please wait...</string>
+    <color name="light_pink">#FF99FF</color>
+    <string name="empty_content">No Contents For Selected Course </string>
+    <color name="black_color">#333300</color>
+    <string name="dowload">Download</string>
    
 
 </resources>

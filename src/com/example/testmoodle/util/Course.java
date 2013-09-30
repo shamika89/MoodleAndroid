@@ -17,7 +17,28 @@ public class Course implements Parcelable{
 	private String idNumber;
 	private int visible;
 	private ArrayList<CourseContent> courseContents=new ArrayList<CourseContent>();
+	private ArrayList<Module> assignment=new ArrayList<Module>();
+	private ArrayList<Document> document=new ArrayList<Document>();
+	private ArrayList<Module> forum=new ArrayList<Module>();
 	
+	public ArrayList<Module> getForum() {
+		return forum;
+	}
+	public void setForum(ArrayList<Module> forum) {
+		this.forum = forum;
+	}
+	public ArrayList<Document> getDocument() {
+		return document;
+	}
+	public void setDocument(ArrayList<Document> document) {
+		this.document = document;
+	}
+	public ArrayList<Module> getAssignment() {
+		return assignment;
+	}
+	public void setAssignment(ArrayList<Module> assignment) {
+		this.assignment = assignment;
+	}
 	public int getId() {
 		return id;
 	}

@@ -14,11 +14,11 @@
         <EditText 
             android:id="@+id/selectedCourse"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:inputType="text"
             android:textColor="#333300"
-            android:textSize="20sp" />
+            android:textSize="12sp" />
         
     </LinearLayout>
     
@@ -43,7 +43,8 @@
 	    android:fastScrollEnabled="true"
 	    android:orientation="vertical"
 	    android:fadingEdgeLength="1dp"
-	    android:cacheColorHint="#00000000" >
+	    android:clickable="true"
+	    android:cacheColorHint="#00000000">
 	</ListView>
     </LinearLayout>
 	

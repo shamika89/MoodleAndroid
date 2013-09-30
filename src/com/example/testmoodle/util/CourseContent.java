@@ -1,12 +1,9 @@
 package com.example.testmoodle.util;
 
 import java.util.ArrayList;
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -84,8 +81,6 @@ public class CourseContent implements Parcelable {
 		    	        JSONObject c = modules.getJSONObject(i); 
 		    	        Module module = new Module();
 		    	        module.populateModule(c);
-		    	        //Toast.makeText(context.getApplicationContext(), course.getShortName(), Toast.LENGTH_LONG).show();
-		    	        // Storing each json item in variable 
 		    	        modulesArray.add(module);
 		    	    } 	
 		    	    

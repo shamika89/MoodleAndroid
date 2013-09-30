@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Module implements Parcelable {
 	
@@ -91,14 +92,12 @@ public class Module implements Parcelable {
 		this.indent = indent;
 	}
 	
-	private ArrayList<File> files=new ArrayList<File>();
+	private ArrayList<Document> files=new ArrayList<Document>();
 	
-	
-	
-	public ArrayList<File> getFiles() {
+	public ArrayList<Document> getFiles() {
 		return files;
 	}
-	public void setFiles(ArrayList<File> files) {
+	public void setFiles(ArrayList<Document> files) {
 		this.files = files;
 	}
 	public void populateModule(JSONObject jsonObject) {
@@ -112,6 +111,7 @@ public class Module implements Parcelable {
 		        String url = jsonObject.optString("url"); 
 		        if (url != null && url.trim().length() > 0)
 		        	this.setUrl(url);
+		        Log.d("URL", url);
 		        String name = jsonObject.optString("name");  
 		        if (name != null && name.trim().length() > 0)
 		        	this.setName(name);
@@ -141,14 +141,12 @@ public class Module implements Parcelable {
 		        	this.setIndent(Integer.valueOf(indent));
 		        
 		        JSONArray contents = jsonObject.getJSONArray("contents");
-		        ArrayList<File> contentsArray = new ArrayList<File>();
+		        ArrayList<Document> contentsArray = new ArrayList<Document>();
 	    	    // looping through all Contents 
 	    	    for(int i = 0; i < contents.length(); i++){ 
 	    	        JSONObject c = contents.getJSONObject(i); 
-	    	        File content = new File();
+	    	        Document content = new Document();
 	    	        content.populateFile(c);
-	    	        //Toast.makeText(context.getApplicationContext(), course.getShortName(), Toast.LENGTH_LONG).show();
-	    	        // Storing each json item in variable 
 	    	        contentsArray.add(content);
 	    	    } 	
 	    	    
@@ -171,7 +169,7 @@ public class Module implements Parcelable {
 	        } 
 	    }; 
 	 
-	    // write your object's data to the passed-in Parcel 
+	    // write the object's data to the passed-in Parcel 
 	    public void writeToParcel(Parcel dest, int flags) { 
 	    	dest.writeInt(id); 
 	    	dest.writeString(url);
@@ -199,7 +197,7 @@ public class Module implements Parcelable {
 	        this.availableFrom = in.readInt();
 	        this.availableUntil = in.readInt();
 	        this.indent = in.readInt();
-	        in.readTypedList(this.files, File.CREATOR); 
+	        in.readTypedList(this.files, Document.CREATOR); 
 	    }
 		@Override
 		public int describeContents() {

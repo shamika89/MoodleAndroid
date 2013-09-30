@@ -1,29 +1,27 @@
 package com.example.testmoodle.activity;
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.example.testmoodle.R;
 import com.example.testmoodle.helper.AppStatus;
 import com.example.testmoodle.helper.TokenHttpRequest;
 import com.example.testmoodle.helper.WebServiceCommunicator;
 import com.example.testmoodle.helper.WebserviceFunction;
 import com.example.testmoodle.util.Course;
+import com.example.testmoodle.util.CourseContent;
 import com.example.testmoodle.util.SiteInfo;
 import com.example.testmoodle.util.User;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -33,41 +31,45 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
-	
-	private EditText siteURl, username, password;
+
+	private EditText siteURl, username, password; // to enter moodle site url,
+													// user's username and
+													// password
 	private Button login;
-	private ProgressDialog dialog;
-	private String url,siteURLVal,passwordVal,usernameVal;
+	private ProgressDialog dialog; // show dialog while application does
+									// background work for finding network
+									// connections
+	private String url, siteURLVal, passwordVal, usernameVal;
 	private User user;
-	private String token;
-	
+	private String token; // token return from web service
+	ArrayList<Course> courses;
+	private static MainActivity instance;
+	private SharedPreferences pref;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		/*setContentView(R.layout.login_activity);
-	
-		siteURl= (EditText) findViewById(R.id.siteURL);
-		username= (EditText) findViewById(R.id.userName);
-		password=(EditText) findViewById(R.id.password);
-		login=(Button) findViewById(R.id.button1);
-		
-		siteURl.setHint("Site URL");
-		username.setHint("Username");
-		password.setHint("Password");*/
-		
-		siteURl= (EditText) findViewById(R.id.serverurlText);
-		username= (EditText) findViewById(R.id.usernameEditText);
-		password=(EditText) findViewById(R.id.passwordEditText);
-		login=(Button) findViewById(R.id.loginButton);
-		
-		
+		instance = this;
+		siteURl = (EditText) findViewById(R.id.serverurlText);
+		username = (EditText) findViewById(R.id.usernameEditText);
+		password = (EditText) findViewById(R.id.passwordEditText);
+		login = (Button) findViewById(R.id.loginButton);
+
 		siteURl.setText("http://10.0.2.2/moodle");
 		username.setText("shamika");
 		password.setText("Shami@123");
-		
+
 		login.setOnClickListener(this);
-		
+
+	}
+
+	public static MainActivity getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(MainActivity instance) {
+		MainActivity.instance = instance;
 	}
 
 	@Override
@@ -78,97 +80,183 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View arg0) {
-		dialog= ProgressDialog.show(this, "", "Please Wait....", true);
-		dialog.setCancelable(true);
-		
-	    siteURLVal=siteURl.getText().toString();
-		passwordVal= password.getText().toString();
-		usernameVal=username.getText().toString();
-		
-		
-		if (AppStatus.getInstance(this).isOnline(this)) {
-			
-		    Toast.makeText(this,"You are online!!!!",Toast.LENGTH_LONG).show();
-		    messageHandler.sendEmptyMessage(0);
-		    
-		    try {
-		    	 user=new User();
-				 user.setUsename(usernameVal);
-				 user.setPassword(passwordVal);
-				 getToken();
-			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				
-				e.printStackTrace();
-			} catch (JSONException e) {
-				
-				e.printStackTrace();
-			}
-		}else{
-			 Toast.makeText(this,"No connections are available. Please make sure your data connection and try again later",Toast.LENGTH_LONG).show();
-			 messageHandler.sendEmptyMessage(0);
-		}
-	}
-	
-	public Handler messageHandler=new Handler(){
-		 public void handleMessage(Message msg) {
-		        super.handleMessage(msg);
-		        dialog.dismiss();
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.loginButton:
+			dialog = ProgressDialog.show(this, "", "Please Wait....", true);
+			dialog.setCancelable(true);
 
-		    }
+			siteURLVal = siteURl.getText().toString();
+			passwordVal = password.getText().toString();
+			usernameVal = username.getText().toString();
 
-	};
-	
-	private void getToken() throws InterruptedException, ExecutionException, JSONException{
-		 url = siteURLVal + "/login/token.php?username=" + usernameVal + "&password=" + passwordVal + "&service=moodle_mobile_app";
-		 user=new User();
-		 user.setUsename(usernameVal);
-		 user.setPassword(passwordVal);
-				JSONObject jsonObj=new TokenHttpRequest(this).execute(url,user).get();
-				token=jsonObj.getString("token");
-				if(token!=null){
-					
+			if (AppStatus.getInstance(this).isOnline(this)) { // check whether the
+																// user has network
+																// connection
+
+				Toast.makeText(this, "You are online!!!!", Toast.LENGTH_LONG)
+						.show();
+				messageHandler.sendEmptyMessage(0); // cancel the dialog
+
+				try {
+					user = new User(); // creating a session for the user and
+										// setting username and password
 					user.setUsename(usernameVal);
 					user.setPassword(passwordVal);
-					user.setToken(token);
+					user.setSiteUrl(siteURLVal);
+					receiveToken();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
-	}
-	
-	public void getSiteInfo() {
-		SiteInfo siteInfo=new SiteInfo();
-		user.setSiteInfo(siteInfo);
-		String serverurl = siteURLVal + "/webservice/rest/server.php" + "?wstoken=" + token + "&wsfunction=";
-		String urlParameters = "";
-		String siteFunction=WebserviceFunction.moodle_webservice_get_siteinfo;
-		new WebServiceCommunicator(this, this).execute(serverurl, siteFunction, urlParameters, user, R.raw.siteinfoxsl);
-	}
-	
-	public void getCourseInfo() throws UnsupportedEncodingException{
-		ArrayList<Course> courses=new ArrayList<Course>();
-		user.setCourses(courses);
-		String serverurl = siteURLVal + "/webservice/rest/server.php" + "?wstoken=" + token + "&wsfunction=";
-		String id= String.valueOf(user.getSiteInfo().getUserID());
-		Log.d("LoggingTracker", id+ "k");
-		String courseUrlParameters= "userid="+URLEncoder.encode(id, "UTF-8");
-		String courseFunction=WebserviceFunction.moodle_enrol_get_users_courses;
-		new WebServiceCommunicator(this, this).execute(serverurl,courseFunction, courseUrlParameters, user, R.raw.coursesxsl );
+				
+				pref = getSharedPreferences("loginDetails", MODE_PRIVATE);
+				
+				SharedPreferences.Editor e = pref.edit();
+				e.putString("siteUrlVal", siteURLVal);
+				e.putString("username", usernameVal);
+				e.putString("pwd", passwordVal);
+				e.commit();
+				
+			} else {
+				Toast.makeText(
+						this,
+						"No connections are available. Please make sure your data connection and try again later",
+						Toast.LENGTH_LONG).show();
+				messageHandler.sendEmptyMessage(0);
+			}
+			
+			break;
+
+		default:
+			break;
+		}
 		
 	}
-	
-	public void viewCourse(){
-		if(user.getCourses().size()>0){
-			Intent intent = new Intent(this, CourseDetailsActivity.class);
-			intent.putExtra("userObject", user); 
-			startActivity(intent);
-		}else{
-			messageHandler.sendEmptyMessage(0);
-    		Log.e("Logging Tracker", "User is not enrolled in any courses");
-        	Toast.makeText(getApplicationContext(), "You are not Enrolled in any Courses, please contact your Lecturer", Toast.LENGTH_LONG).show();
+
+	public String getToken() {
+		return token;
+	}
+
+	public Handler messageHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			dialog.dismiss();
+
+		}
+
+	};
+
+	private void receiveToken() throws InterruptedException,
+			ExecutionException, JSONException { // calling moodle webservice for
+												// returning a token for the
+												// user
+		url = siteURLVal + "/login/token.php?username=" + usernameVal
+				+ "&password=" + passwordVal + "&service=moodle_mobile_app";
+		JSONObject jsonObj = new TokenHttpRequest(this, this)
+				.execute(url, user).get();
+		token = jsonObj.getString("token");
+		if (token != null) { // check whether the user is a valid user
+			user.setUsename(usernameVal);
+			user.setPassword(passwordVal);
+			user.setToken(token);
+		
 		}
 	}
-		
+
+	public void getSiteInfo() { // get site information. basically to get the
+								// user id.
+		SiteInfo siteInfo = new SiteInfo();
+		user.setSiteInfo(siteInfo);
+		String serverurl = siteURLVal + "/webservice/rest/server.php"
+				+ "?wstoken=" + token + "&wsfunction=";
+		String urlParameters = "";
+		String siteFunction = WebserviceFunction.moodle_webservice_get_siteinfo;
+		new WebServiceCommunicator(this, this).execute(serverurl, siteFunction,
+				urlParameters, user, R.raw.siteinfoxsl);
+		// background work is handled by WebService Communicator asynchronous
+		// class
 	}
-	
+
+	public void getCourseInfo() throws UnsupportedEncodingException { // get
+																		// user's
+																		// enrolled
+																		// courses
+		courses = new ArrayList<Course>();
+		user.setCourses(courses);
+		String serverurl = siteURLVal + "/webservice/rest/server.php"
+				+ "?wstoken=" + token + "&wsfunction=";
+		String id = String.valueOf(user.getSiteInfo().getUserID());
+		String courseUrlParameters = "userid=" + URLEncoder.encode(id, "UTF-8");
+		String courseFunction = WebserviceFunction.moodle_enrol_get_users_courses;
+		new WebServiceCommunicator(this, this).execute(serverurl,
+				courseFunction, courseUrlParameters, user, R.raw.coursesxsl);
+
+	}
+
+	public void getCourseContents() throws UnsupportedEncodingException {
+		if (user.getCourses().size() > 0) {
+			String serverurl = siteURLVal + "/webservice/rest/server.php"
+					+ "?wstoken=" + token + "&wsfunction=";
+			String contentFunction = WebserviceFunction.core_course_get_contents;
+
+			for (int i = 0; i < user.getCourses().size(); i++) {
+				String course = String
+						.valueOf(user.getCourses().get(i).getId());
+				String contentUrlParameters = "courseid="
+						+ URLEncoder.encode(course, "UTF-8");
+				Course c = user.getCourses().get(i);
+				ArrayList<CourseContent> content = new ArrayList<CourseContent>();
+				c.setCourseContents(content);
+				new WebServiceCommunicator(this, this).execute(serverurl,
+						contentFunction, contentUrlParameters, user,
+						R.raw.contentxsl, i);
+
+			}
+			
+		}
+	}
+
+	/*
+	 * public void getAssignmentInfo() throws UnsupportedEncodingException{
+	 * //get user's enrolled courses String serverurl = siteURLVal +
+	 * "/webservice/rest/server.php" + "?wstoken=" + token + "&wsfunction=";
+	 * String assignmentFunction=WebserviceFunction.mod_assign_get_assignments;
+	 * if(user.getCourses().size()>0){ for(int i=0;
+	 * i<user.getCourses().size();i++){ Course c=user.getCourses().get(i);
+	 * ArrayList<Assignment> assignment=new ArrayList<Assignment>();
+	 * c.setAssignment(assignment);
+	 * 
+	 * String id= String.valueOf(c.getId()); String assignUrlParameters=
+	 * "courseids[0]="+URLEncoder.encode(id, "UTF-8"); new
+	 * WebServiceCommunicator(this, this).execute(serverurl, assignmentFunction,
+	 * assignUrlParameters, user, R.raw.assignments );
+	 * 
+	 * } }
+	 * 
+	 * }
+	 */
+
+	public ArrayList<Course> getCourses() {
+		return courses;
+	}
+
+	public void viewCourse() { // Transferring to CourseDetails activity
+		if (user.getCourses().size() > 0) {
+			Intent intent = new Intent(this, CourseDetailsActivity.class);
+			intent.putExtra("userObject", user);
+			intent.putExtra("siteUrl", siteURLVal);
+			startActivity(intent);
+		} else {
+			Log.e("Logging Tracker", "User is not enrolled in any course");
+			Toast.makeText(
+					getApplicationContext(),
+					"You are not Enrolled in any Courses, please contact your Lecturer",
+					Toast.LENGTH_LONG).show();
+		}
+	}
+
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayoutLoadingResourses"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/LoadingProgressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/download_state"
+            android:textColor="@color/red"
+            android:background="@color/light_pink" />
+
+        <ProgressBar
+            android:id="@+id/LoadingProgressImage"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/linearLayoutlistview"
+          android:layout_above="@+id/footer_view" 
+          android:layout_below="@+id/linearLayoutLoadingResourses"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/bg_color"
+          android:orientation="vertical" >
+
+          <ListView
+              android:id="@+id/myFiles"
+              android:layout_width="fill_parent"
+              android:layout_height="410dp"
+              android:background="@drawable/listviewitem"
+              android:cacheColorHint="#00000000"
+              android:divider="#9aa0a0"
+              android:dividerHeight="0.8dp"
+              android:fadingEdgeLength="1dp"
+              android:fastScrollEnabled="true"
+              android:orientation="vertical" >
+          </ListView>
+
+    </LinearLayout>
+    
+   
+
+    <include
+        android:id="@+id/footer_view"
+        layout="@layout/footer_navigation" />
+
+</RelativeLayout>

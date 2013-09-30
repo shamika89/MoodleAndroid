@@ -1,18 +1,20 @@
 package com.example.testmoodle.activity;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import com.example.testmoodle.R;
+import com.example.testmoodle.helper.WebServiceCommunicator;
+import com.example.testmoodle.helper.WebserviceFunction;
 import com.example.testmoodle.util.Course;
+import com.example.testmoodle.util.CourseContent;
 import com.example.testmoodle.util.User;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -30,6 +32,8 @@ public class CourseDetailsActivity extends Activity implements OnClickListener {
 	private ListView courselist;
 	private Button overviewButton, courseButton, logoutButton, backButton;
 	private Intent nextPage;
+	private SharedPreferences pref;
+	private String siteUrl;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +47,14 @@ public class CourseDetailsActivity extends Activity implements OnClickListener {
 		backButton=(Button) findViewById(R.id.back);
 		
 		Intent i = getIntent();
-        user = (User) i.getParcelableExtra("userObject"); 
+        user = (User) i.getParcelableExtra("userObject"); //get the parceable user object
+       
+        pref = getSharedPreferences("loginDetails", MODE_PRIVATE);
+		siteUrl=pref.getString("siteUrlVal", null);
         
         listCourses();
         
         courseButton.setOnClickListener(this);
-        if(overviewButton.isEnabled())
         overviewButton.setOnClickListener(this);
         logoutButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
@@ -66,14 +72,12 @@ public class CourseDetailsActivity extends Activity implements OnClickListener {
 	public void listCourses(){
 		  List<Course> values = user.getCourses();
 		  
-		  Log.d("LoggingTracker", "ID=" +values.get(0).getIdNumber());
-		 
-		  MyAdapter adapter1= new MyAdapter(this, (ArrayList<Course>) values);
+		  MyAdapter adapter1= new MyAdapter(this, (ArrayList<Course>) values); //setting an adapter for listview
 		  courselist.setAdapter(adapter1);
 		
 	}
 	
-	private class MyAdapter extends BaseAdapter {
+	private class MyAdapter extends BaseAdapter { //create new adapter class
 	      private final Context context;
 	      private final ArrayList<Course> array;
 
@@ -112,21 +116,26 @@ public class CourseDetailsActivity extends Activity implements OnClickListener {
 	        }
 	    
 	       TextView myCourse = (TextView)rowView.findViewById(R.id.myCoursesName);
-	       myCourse.setText(values.getShortName()+" "+values.getFulltName());
-	       Log.d("LoggingTracker", values.getShortName()+" "+values.getFulltName());
+	        myCourse.setText(values.getFulltName());
+	     
 	       if (position % 2 != 0)
-				myCourse.setBackgroundResource(R.drawable.listview_item_differentiate_color);
+				myCourse.setBackgroundResource(R.drawable.listview_item_differentiate_color); //for differentiate listview items
 
 			rowView.setClickable(true);
 			
 			rowView.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-					final int REQUEST_CODE = id;
-					Intent i = new Intent(context, ContentSelector.class);
+					//Intent i = new Intent(context, ContentSelector.class); //transferring to ContentSelector activity 
 					user.setSelectedCourseID(id);
-					i.putExtra("userObject", user); 
-					startActivity(i);
+					try {
+						getCourseContents();
+					} catch (UnsupportedEncodingException e) {
+						
+						e.printStackTrace();
+					}
+					//i.putExtra("userObject", user); 
+					//startActivity(i);
 
 				}
 			});
@@ -135,13 +144,12 @@ public class CourseDetailsActivity extends Activity implements OnClickListener {
 }
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v) { //selection of footer view
 		
 		switch(v.getId()) {		
 		case R.id.coursework_overview:
 			Toast.makeText(this,"Please Select a Course",Toast.LENGTH_LONG).show();
 			break;	
-		
 		case R.id.select_course:
 			nextPage = new Intent(this, CourseDetailsActivity.class);
 			nextPage.putExtra("userObject", user);
@@ -160,6 +168,35 @@ public class CourseDetailsActivity extends Activity implements OnClickListener {
 			default:
 			
 	}
+	}
+	
+	public void getCourseContents() throws UnsupportedEncodingException {
+		
+			String serverurl = siteUrl + "/webservice/rest/server.php"
+					+ "?wstoken=" + user.getToken() + "&wsfunction=";
+			String contentFunction = WebserviceFunction.core_course_get_contents;
+
+			
+				String course = String
+						.valueOf(user.getCourse(user.getSelectedCourseID()).getId());
+				String contentUrlParameters = "courseid="
+						+ URLEncoder.encode(course, "UTF-8");
+				
+				ArrayList<CourseContent> content = new ArrayList<CourseContent>();
+				user.getCourse(user.getSelectedCourseID()).setCourseContents(content);
+				new WebServiceCommunicator(this, this).execute(serverurl,
+						contentFunction, contentUrlParameters, user,
+						R.raw.contentxsl);
+
+			
+			
+		
+	}
+	
+	public void viewContents(){
+		nextPage= new Intent(this, ContentSelector.class); //transferring to ContentSelector activity
+		nextPage.putExtra("userObject", user); 
+		startActivity(nextPage);
 	}
 	
 }

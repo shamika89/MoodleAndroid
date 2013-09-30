@@ -8,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -17,40 +16,42 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.testmoodle.activity.CourseDetailsActivity;
 import com.example.testmoodle.activity.MainActivity;
 import com.example.testmoodle.util.Course;
-import com.example.testmoodle.util.SiteInfo;
+import com.example.testmoodle.util.CourseContent;
 import com.example.testmoodle.util.User;
-
-import android.R.xml;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.util.Xml;
-import android.webkit.WebBackForwardList;
-import android.widget.Toast;
+
 
 public class WebServiceCommunicator extends AsyncTask<Object, Object, JSONObject>{
 	private String function;
-	private Object extra; 
+	private int extra; 
 	private String url;
 	private Context context;
 	private User user;
 	private MainActivity activity;
+	private CourseDetailsActivity detailActivity;
 	public WebServiceCommunicator(Context context, MainActivity activity){
 		this.context=context;
 		this.activity=activity;
 	}
-	
 
-	/*public WebServiceCommunicator(MainActivity activity) {
-		this.activity = activity;
-     }*/
 	
+	public WebServiceCommunicator(Context context,
+			CourseDetailsActivity courseDetailsActivity) {
+		this.context=context;
+		this.detailActivity=courseDetailsActivity;
+	}
+
+
 	@Override
 	protected JSONObject doInBackground(Object... params) {
 		url=(String) params[0];
@@ -58,8 +59,8 @@ public class WebServiceCommunicator extends AsyncTask<Object, Object, JSONObject
 		String urlParameters = (String) params[2];
 		user=(User) params[3];
 		int xslRawId = (Integer) params[4];
-		if(params.length > 3) {
-			extra = params[3];
+		if(params.length > 5) {
+			extra = (Integer)params[5];
 		}
 		HttpURLConnection con;
 		try {
@@ -79,13 +80,12 @@ public class WebServiceCommunicator extends AsyncTask<Object, Object, JSONObject
 			wr.flush();
 			wr.close();
 
-			// Get Response
-			InputStream is = con.getInputStream();
-			
+			InputStream is = con.getInputStream();                          // Get Response
+			Log.d("XML Response", is.toString());
 			Source xmlSource = new StreamSource(is);
+			Log.d("XML Response", xmlSource.toString());
 			Source xsltSource = new StreamSource(context.getResources().openRawResource(xslRawId));
-
-			TransformerFactory transFact = TransformerFactory.newInstance();
+			TransformerFactory transFact = TransformerFactory.newInstance();        //transform XML to JSon.
 			Transformer trans = transFact.newTransformer(xsltSource);
 			StringWriter writer = new StringWriter();
 			trans.transform(xmlSource, new StreamResult(writer));
@@ -100,21 +100,22 @@ public class WebServiceCommunicator extends AsyncTask<Object, Object, JSONObject
 			
 		} catch (MalformedURLException e) {
 			//Toast.makeText(context, "Error web service request", Toast.LENGTH_SHORT).show();
-			Log.d("LoggingTracker", "MalFunc exception"+e.toString());
+			Log.d("WebServiceCommunicator", "MalFunc exception"+e.toString());              // writing exception to log
+			e.printStackTrace();
 		} catch (IOException e) {
-			Log.d("LoggingTracker", "Io exception"+e.toString());
+			Log.d("WebServiceCommunicator", "IO exception"+e.toString());
 			e.printStackTrace();
 		} catch (TransformerConfigurationException e) {
-			Log.d("LoggingTracker", "TransformConfig exception"+e.toString());
+			Log.d("WebServiceCommunicator", "TransformConfig exception"+e.toString());
 			e.printStackTrace();
 		} catch (TransformerException e) {
-			Log.d("LoggingTracker", "Transformer exception"+e.toString());
+			Log.d("WebServiceCommunicatorr", "Transformer exception"+e.toString());
 			e.printStackTrace();
 		} catch (JSONException e) {
-			Log.d("LoggingTracker", "json exception"+e.toString());
+			Log.d("WebServiceCommunicator", "Json exception"+e.toString());
 			e.printStackTrace();
 		} catch (Exception e) {
-			Log.d("LoggingTracker", " exception"+e.toString());
+			Log.d("WebServiceCommunicator", "Exception "+e.toString());
 			e.printStackTrace();
 		}
 		
@@ -145,16 +146,30 @@ public class WebServiceCommunicator extends AsyncTask<Object, Object, JSONObject
 					c.populateCourse(obj);
 					user.getCourses().add(c);
 				}
+				//activity.getCourseContents();
 				activity.viewCourse();
 			} catch (JSONException e) {
 				e.printStackTrace();
-			}
+			} 
 		
 		}
-		/*else if(fn.equals(WebServiceFunction.core_course_get_contents))
-			Session.getCourseManager().setCourseDetails(jsonObject, (Integer)extra);
-		else
-			Log.d(Constants.LOG_WSR, "Some unknown request was executed, please specify where to send the result to");*/
+		else if(function.equals(WebserviceFunction.core_course_get_contents)){
+			try {
+				JSONArray coursecontents = jsonObject.getJSONArray("coursecontents");
+				  for(int i = 0; i < coursecontents.length(); i++){ 
+		    	        JSONObject c = coursecontents.getJSONObject(i); 
+		    	        CourseContent coursecontent = new CourseContent();
+		    	        coursecontent.populateCourseContent(c);
+		    	        user.getCourse(user.getSelectedCourseID()).getCourseContents().add(coursecontent);
+		    	    } 			
+				
+					detailActivity.viewContents();
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }
 

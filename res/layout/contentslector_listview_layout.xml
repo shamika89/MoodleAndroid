@@ -3,14 +3,14 @@
   
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_color"
+    android:background="@drawable/listviewitem"
     android:gravity="top"
     android:orientation="horizontal" >
 
         <ImageView
             android:id="@+id/contentImageview"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:contentDescription="documentsImage"
             android:src="@drawable/document"
             android:focusable="false"
@@ -20,14 +20,14 @@
         <TextView
             android:id="@+id/cotentTitleTextview"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:ellipsize="marquee"
+            android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:clickable="true"
             android:gravity="left|center_vertical"
             android:text="Documents"
             android:textColor="#3f3f3f"
-            android:textSize="20sp"
-             android:focusable="false"
-            android:focusableInTouchMode="false" />
+            android:textSize="15sp"
+             />
     
 </LinearLayout>

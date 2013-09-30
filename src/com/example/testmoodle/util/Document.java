@@ -2,11 +2,11 @@ package com.example.testmoodle.util;
 
 
 import org.json.JSONObject;
-
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-public class File implements Parcelable{
+public class Document implements Parcelable{
 	private String type;
 	private String fileName;
 	private String filePath;
@@ -19,8 +19,28 @@ public class File implements Parcelable{
 	private int userID;
 	private String author;
 	private String license;
+	private String timeCreatedmodified;
+	private String fileSizewithUnits;
 	
-	public File(){
+	public String getFileSizewithUnits() {
+		return fileSizewithUnits;
+	}
+	public void setFileSizewithUnits(String fileSizewithUnits) {
+		this.fileSizewithUnits = fileSizewithUnits;
+	}
+	public String getTimeCreatedmodified() {
+		return timeCreatedmodified;
+	}
+	public void setTimeCreatedmodified(String timeCreateodified) {
+		this.timeCreatedmodified = timeCreateodified;
+	}
+	public void setTimeCreated(Long timeCreated) {
+		this.timeCreated = timeCreated;
+	}
+	public void setTimeModified(Long timeModified) {
+		this.timeModified = timeModified;
+	}
+	public Document(){
 		// TODO Auto-generated constructor stub
 	}
 	public String getType() {
@@ -103,9 +123,11 @@ public class File implements Parcelable{
 		        if (type != null && type.trim().length() > 0)
 		        	this.setType(type);
 		        String filename = jsonObject.optString("filename"); 
+		        Log.d("Module", filename);
 		        if (filename != null && filename.trim().length() > 0)
 		        	this.setFileName(filename);
 		        String filepath = jsonObject.optString("filepath"); 
+		        Log.d("Module", filepath);
 		        if (filepath != null && filepath.trim().length() > 0)
 		        	this.setFilePath(filepath);
 		        String filesize = jsonObject.optString("filesize"); 
@@ -142,18 +164,18 @@ public class File implements Parcelable{
 	        return 0; 
 	    } 
 	    
-	 // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods 
-	    public static final Parcelable.Creator<File> CREATOR = new Parcelable.Creator<File>() { 
-	        public File createFromParcel(Parcel in) { 
-	            return new File(in); 
+	 // This is used to regenerate the object. All Parcelables must have a CREATOR that implements these two methods 
+	    public static final Parcelable.Creator<Document> CREATOR = new Parcelable.Creator<Document>() { 
+	        public Document createFromParcel(Parcel in) { 
+	            return new Document(in); 
 	        } 
 	 
-	        public File[] newArray(int size) { 
-	            return new File[size]; 
+	        public Document[] newArray(int size) { 
+	            return new Document[size]; 
 	        } 
 	    }; 
 	 
-	    // write your object's data to the passed-in Parcel 
+	    // write the object's data to the passed-in Parcel 
 	    public void writeToParcel(Parcel dest, int flags) { 
 	    	dest.writeString(type); 
 	    	dest.writeString(fileName);
@@ -169,7 +191,7 @@ public class File implements Parcelable{
 	    	dest.writeString(license);
 	    }
 	    
-	    private File(Parcel in) { 
+	    private Document(Parcel in) { 
 	        this.type = in.readString(); 
 	        this.fileName = in.readString();
 	        this.filePath = in.readString();

@@ -34,7 +34,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="8dp"
-            android:hint="server url"
+            android:hint="Server url"
              />
         <EditText
             android:id="@+id/usernameEditText"
@@ -48,7 +48,7 @@
             android:paddingBottom="8dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:hint="username" >
+            android:hint="Username" >
 
             <requestFocus />
         </EditText>
@@ -66,21 +66,24 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="8dp"
-            android:hint="password"
+            android:hint="Password"
              />
 
        
         <Button
             android:id="@+id/loginButton"
             android:layout_width="80dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/orangebtn"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="@string/LoginButton"
             android:textColor="@color/red"
-            android:textStyle="bold" />
+            android:textSize="12sp"
+            android:textStyle="bold"
+            
+             />
  			
        
     </LinearLayout>
