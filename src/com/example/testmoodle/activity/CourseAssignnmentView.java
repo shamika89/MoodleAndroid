@@ -92,15 +92,15 @@ public class CourseAssignnmentView extends Activity implements OnClickListener{
 		  
 		  emptyLayout=(LinearLayout) findViewById(R.id.course_assignment_empty);
 		  contentLayout=(LinearLayout) findViewById(R.id.course_assignment_listview);
-		  emptyLayout.setVisibility(View.VISIBLE);
-		  contentLayout.setVisibility(View.INVISIBLE);
+		  emptyLayout.setVisibility(View.INVISIBLE);
+		  contentLayout.setVisibility(View.VISIBLE);
 		  
 		  if(values !=null && values.size()>0 ){
 		  MyAdapter adapter1= new MyAdapter(this, (ArrayList<Module>) values); //setting an adapter for listview
 		  assignmentlist.setAdapter(adapter1);
 		  }else{
-			  emptyLayout.setVisibility(View.INVISIBLE);
-			  contentLayout.setVisibility(View.VISIBLE);
+			  emptyLayout.setVisibility(View.VISIBLE);
+			  contentLayout.setVisibility(View.INVISIBLE);
 		  }
 		
 	}

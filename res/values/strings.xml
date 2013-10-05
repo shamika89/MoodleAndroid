@@ -16,6 +16,10 @@
     <string name="empty_content">No Contents For Selected Course </string>
     <color name="black_color">#333300</color>
     <string name="dowload">Download</string>
+    <string name="offline_button">I m Offline</string>
+    <color name="white">#FFFFFF</color>
+    <string name="delete">Delete</string>
+    <string name="open">Open</string>
    
 
 </resources>

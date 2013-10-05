@@ -18,6 +18,7 @@ public final class R {
         public static final int black_color=0x7f080003;
         public static final int light_pink=0x7f080002;
         public static final int red=0x7f080000;
+        public static final int white=0x7f080004;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -48,11 +49,13 @@ public final class R {
         public static final int LoadingProgressImage=0x7f0b0012;
         public static final int LoadingProgressText=0x7f0b0011;
         public static final int MDroidLogoimageView=0x7f0b0021;
-        public static final int action_settings=0x7f0b0026;
+        public static final int OfflineButton=0x7f0b0026;
+        public static final int action_settings=0x7f0b0036;
         public static final int assignments=0x7f0b000d;
         public static final int back=0x7f0b001c;
         public static final int contentImageview=0x7f0b0008;
         public static final int cotentTitleTextview=0x7f0b0009;
+        public static final int courseModifiedDateOffline=0x7f0b0034;
         public static final int course_assignment_empty=0x7f0b0003;
         public static final int course_assignment_listview=0x7f0b0000;
         public static final int course_forum_listview=0x7f0b001d;
@@ -71,18 +74,32 @@ public final class R {
         public static final int myAssignmentName=0x7f0b0004;
         public static final int myAssignments=0x7f0b0002;
         public static final int myContets=0x7f0b0007;
+        public static final int myCourseNameOffline=0x7f0b0033;
         public static final int myCourses=0x7f0b000e;
         public static final int myCoursesName=0x7f0b000f;
         public static final int myFileButton=0x7f0b0017;
         public static final int myFileDownloadStatus=0x7f0b0016;
         public static final int myFileName=0x7f0b0015;
         public static final int myFiles=0x7f0b0014;
+        public static final int myFilesOffline=0x7f0b002a;
         public static final int myForums=0x7f0b001e;
+        public static final int myOfflineFileDeleteButton=0x7f0b002d;
+        public static final int myOfflineFileDetails=0x7f0b002c;
+        public static final int myOfflineFileName=0x7f0b002b;
+        public static final int myOfflineFileOpenButton=0x7f0b002e;
+        public static final int myOfflineFiles=0x7f0b0028;
+        public static final int myOfflineFolders=0x7f0b0030;
+        public static final int noOfFilesOffline=0x7f0b0035;
+        public static final int offline_file_listview=0x7f0b0027;
+        public static final int offline_folder_listview=0x7f0b002f;
+        public static final int offlinne_files_empty=0x7f0b0029;
+        public static final int offlinne_folder_empty=0x7f0b0031;
         public static final int passwordEditText=0x7f0b0024;
         public static final int select_course=0x7f0b001a;
         public static final int selectcourse=0x7f0b000a;
         public static final int selectedCourse=0x7f0b0006;
         public static final int serverurlText=0x7f0b0022;
+        public static final int superLinearLayout=0x7f0b0032;
         public static final int usernameEditText=0x7f0b0023;
     }
     public static final class layout {
@@ -99,6 +116,11 @@ public final class R {
         public static final int forum_listing=0x7f03000a;
         public static final int forumlistview_layout=0x7f03000b;
         public static final int login=0x7f03000c;
+        public static final int offline_file_listing=0x7f03000d;
+        public static final int offline_file_listing_listview=0x7f03000e;
+        public static final int offline_folder_listing=0x7f03000f;
+        public static final int offline_folder_listing_listview=0x7f030010;
+        public static final int offline_footer_navigation=0x7f030011;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
@@ -117,11 +139,14 @@ public final class R {
         public static final int back=0x7f070005;
         public static final int course_overview=0x7f070007;
         public static final int courses_view=0x7f070004;
+        public static final int delete=0x7f07000c;
         public static final int dowload=0x7f07000a;
         public static final int download_state=0x7f070008;
         public static final int empty_content=0x7f070009;
         public static final int hello_world=0x7f070002;
         public static final int logout=0x7f070006;
+        public static final int offline_button=0x7f07000b;
+        public static final int open=0x7f07000d;
     }
     public static final class style {
         /** 

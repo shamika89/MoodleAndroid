@@ -43,6 +43,12 @@
          <activity
             android:name="com.example.testmoodle.activity.CourseForumView" android:configChanges="orientation" android:label="Course Forum listing" >
         </activity>
+        <activity
+            android:name="com.example.testmoodle.activity.OfflieFolderListigActivity" android:configChanges="orientation" android:label="Offline Folder listing" >
+        </activity>
+        <activity
+            android:name="com.example.testmoodle.activity.OfflineFileListingActivity" android:configChanges="orientation" android:label="Offline File listing" >
+        </activity>
     </application>
 
 </manifest>

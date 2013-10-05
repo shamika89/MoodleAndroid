@@ -1,5 +1,6 @@
 package com.example.testmoodle.activity;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private EditText siteURl, username, password; // to enter moodle site url,
 													// user's username and
 													// password
-	private Button login;
+	private Button login, offline;
 	private ProgressDialog dialog; // show dialog while application does
 									// background work for finding network
 									// connections
@@ -45,6 +46,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	ArrayList<Course> courses;
 	private static MainActivity instance;
 	private SharedPreferences pref;
+	private Intent nextPage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,14 @@ public class MainActivity extends Activity implements OnClickListener {
 		username = (EditText) findViewById(R.id.usernameEditText);
 		password = (EditText) findViewById(R.id.passwordEditText);
 		login = (Button) findViewById(R.id.loginButton);
+		offline = (Button) findViewById(R.id.OfflineButton);
 
 		siteURl.setText("http://10.0.2.2/moodle");
 		username.setText("shamika");
 		password.setText("Shami@123");
 
 		login.setOnClickListener(this);
+		offline.setOnClickListener(this);
 
 	}
 
@@ -90,8 +94,10 @@ public class MainActivity extends Activity implements OnClickListener {
 			passwordVal = password.getText().toString();
 			usernameVal = username.getText().toString();
 
-			if (AppStatus.getInstance(this).isOnline(this)) { // check whether the
-																// user has network
+			if (AppStatus.getInstance(this).isOnline(this)) { // check whether
+																// the
+																// user has
+																// network
 																// connection
 
 				Toast.makeText(this, "You are online!!!!", Toast.LENGTH_LONG)
@@ -112,15 +118,15 @@ public class MainActivity extends Activity implements OnClickListener {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				
+
 				pref = getSharedPreferences("loginDetails", MODE_PRIVATE);
-				
+
 				SharedPreferences.Editor e = pref.edit();
 				e.putString("siteUrlVal", siteURLVal);
 				e.putString("username", usernameVal);
 				e.putString("pwd", passwordVal);
 				e.commit();
-				
+
 			} else {
 				Toast.makeText(
 						this,
@@ -128,13 +134,26 @@ public class MainActivity extends Activity implements OnClickListener {
 						Toast.LENGTH_LONG).show();
 				messageHandler.sendEmptyMessage(0);
 			}
-			
+
 			break;
 
+		case R.id.OfflineButton:
+			String file = android.os.Environment.getExternalStorageDirectory()
+					.getPath() + "/Moodle";
+			File f = new File(file);
+			if (f.exists()) {
+				nextPage = new Intent(this, OfflieFolderListigActivity.class);
+				startActivity(nextPage);
+			} else {
+				Toast.makeText(getBaseContext(),
+						"You must login atleast once to use this feature!",
+						Toast.LENGTH_LONG).show();
+			}
+			break;
 		default:
 			break;
 		}
-		
+
 	}
 
 	public String getToken() {
@@ -163,7 +182,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			user.setUsename(usernameVal);
 			user.setPassword(passwordVal);
 			user.setToken(token);
-		
+
 		}
 	}
 
@@ -216,7 +235,7 @@ public class MainActivity extends Activity implements OnClickListener {
 						R.raw.contentxsl, i);
 
 			}
-			
+
 		}
 	}
 
@@ -246,10 +265,10 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	public void viewCourse() { // Transferring to CourseDetails activity
 		if (user.getCourses().size() > 0) {
-			Intent intent = new Intent(this, CourseDetailsActivity.class);
-			intent.putExtra("userObject", user);
-			intent.putExtra("siteUrl", siteURLVal);
-			startActivity(intent);
+			nextPage = new Intent(this, CourseDetailsActivity.class);
+			nextPage.putExtra("userObject", user);
+			nextPage.putExtra("siteUrl", siteURLVal);
+			startActivity(nextPage);
 		} else {
 			Log.e("Logging Tracker", "User is not enrolled in any course");
 			Toast.makeText(

@@ -73,7 +73,7 @@
         <Button
             android:id="@+id/loginButton"
             android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/orangebtn"
             android:paddingBottom="10dp"
@@ -85,7 +85,20 @@
             
              />
  			
-       
+        <Button
+            android:id="@+id/OfflineButton"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/greenbtn"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/offline_button"
+            android:textColor="@color/red"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            
+             />
     </LinearLayout>
 
 </ScrollView>

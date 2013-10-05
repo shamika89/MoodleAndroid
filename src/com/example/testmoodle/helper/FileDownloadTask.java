@@ -99,10 +99,11 @@ public class FileDownloadTask extends AsyncTask<Object, Integer, File> {
 				ByteArrayBuffer baf = new ByteArrayBuffer(50);
 				int current = 0;
 				long total = 0;
+				int fileSize=ucon.getContentLength();
 				while ((current = bis.read()) != -1) {
 						total += current;
-						Log.d("Total", String.valueOf(total));
-						publishProgress((int) (total * 100 / fileLength),
+						//Log.d("Total", String.valueOf(total));
+						publishProgress((int) (total * 100 / fileSize),
 								fileLength / 1024);
 						baf.append((byte) current);
 				}
@@ -161,7 +162,7 @@ public class FileDownloadTask extends AsyncTask<Object, Integer, File> {
 						+ ", download complete");
 				fileDownloadButton.setText("Open");
 				fileDownloadButton.setBackgroundResource(R.drawable.bluebtn);
-				
+				fileDownloadButton.setClickable(true);
 			}
 			
 		} else

@@ -43,7 +43,7 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 	private String courseName;
 	private ProgressBar loadingImage;
 	private TextView loadingText;
-	//private LinearLayout downloadStatusLayout;
+	private LinearLayout downloadStatusLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +57,8 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 		backButton = (Button) findViewById(R.id.back);
 		loadingImage=(ProgressBar) findViewById(R.id.LoadingProgressImage);
 		loadingText=(TextView) findViewById(R.id.LoadingProgressText);
-		//downloadStatusLayout=(LinearLayout) findViewById(R.id.linearLayoutLoadingResourses);
-		//downloadStatusLayout.setVisibility(View.INVISIBLE);
+		downloadStatusLayout=(LinearLayout) findViewById(R.id.linearLayoutLoadingResourses);
+		downloadStatusLayout.setVisibility(View.INVISIBLE);
 
 		Intent i = getIntent();
 		user = (User) i.getParcelableExtra("userObject"); // get the parceable
@@ -107,20 +107,7 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 										+ "/Documents/" + item.getFileName());
 								file.exists();
 
-								/*
-								 * int thumbresourse =
-								 * FileTypeThumbHelper.getInstance
-								 * (context).getThumbResourse(fileextension);
-								 * 
-								 * int traffic; if (file.exists() &&
-								 * file.lastModified() >=
-								 * item.getTimeCreated()*1000) { traffic =
-								 * R.drawable.light_green_icon; } else if
-								 * (file.exists() && file.lastModified() <
-								 * item.getTimeCreated()*1000) { traffic =
-								 * R.drawable.light_orange_icon; } else {
-								 * traffic = R.drawable.light_red_icon; }
-								 */
+								
 
 								long timeCreate = item.getTimeCreated() * 1000;
 								Date createDate = new Date(timeCreate);
@@ -173,7 +160,7 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 		  MyAdapter adapter1= new MyAdapter(this, (ArrayList<Document>) values); //setting an adapter for listview
 		  courselist.setAdapter(adapter1);
 		  }else{
-			  //downloadStatusLayout.setVisibility(View.VISIBLE);
+			  downloadStatusLayout.setVisibility(View.VISIBLE);
 			  loadingImage.setVisibility(ProgressBar.GONE);
 			  loadingText.setText("No files found!");
 		  }
@@ -224,7 +211,7 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 	       downloadButton.setId(position + 10001000);
 	       
 	       //check whether the file is already existing 
-	      /* String courseDir = android.os.Environment
+	       String courseDir = android.os.Environment
 					.getExternalStorageDirectory().getPath()
 					+ "/Moodle/"
 					+ courseName + "/";
@@ -232,13 +219,23 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 			File[] files = dir.listFiles();
 			
 			if(files!=null){
-			for (File f : files) {
-			    if (f.isFile()){
-			        String name = f.getName();
-			        Log.d("File", name);
+			
+			    	for(int i=0; i< user.getCourse(user.getSelectedCourseID())
+										.getDocument().size();i++){
+			    		for(File f: files){
+			    		if(f.getName().equals(user.getCourse(user.getSelectedCourseID())
+										.getDocument().get(position).getFileName())){
+			    			downloadButton.setText("Open");
+			    			downloadButton.setBackgroundResource(R.drawable.bluebtn);
+			    			break;
+			    		}else{
+			    			downloadButton.setText("Dowload");
+			    			downloadButton.setBackgroundResource(R.drawable.orangebtn);
+			    		}
+			    		}
+			    	}
 			    }
-			}
-			}*/
+			
 	       
 	        myDocument.setText(values.getFileName());
 	        downloadState.setText(values.getFileSizewithUnits()+ " "+ values.getTimeCreatedmodified());
@@ -254,7 +251,7 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 					
 					String mimeType=null;
 					if (downloadButton.getText().equals("Download")) {
-						//downloadStatusLayout.setVisibility(View.VISIBLE);
+						downloadStatusLayout.setVisibility(View.VISIBLE);
 						downloadButton.setEnabled(false);
 						downloadButton
 								.setBackgroundResource(R.drawable.greenbtn);

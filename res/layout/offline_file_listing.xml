@@ -7,17 +7,17 @@
 
 
       <LinearLayout
-          android:id="@+id/course_forum_listview"
+          android:id="@+id/offline_file_listview"
           android:layout_above="@+id/footer_view" 
        	  android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="fill_parent"
           android:background="@color/bg_color"
           android:orientation="vertical" >
 
           <ListView
-              android:id="@+id/myForums"
+              android:id="@+id/myOfflineFiles"
               android:layout_width="fill_parent"
-              android:layout_height="410dp"
+              android:layout_height="fill_parent"
               android:background="@drawable/listviewitem"
               android:cacheColorHint="#00000000"
               android:divider="#9aa0a0"
@@ -30,12 +30,12 @@
     </LinearLayout>
     
    <LinearLayout 
-        android:id="@+id/course_forumitem_empty" 
+        android:id="@+id/offlinne_files_empty" 
         android:layout_above="@+id/footer_view"        
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:orientation="vertical"	    
-        >
+        android:visibility="invisible">
         
 	    <TextView    	        
 		    android:layout_width="fill_parent"
@@ -47,6 +47,6 @@
 
     <include
         android:id="@+id/footer_view"
-        layout="@layout/footer_navigation" />
+        layout="@layout/offline_footer_navigation" />
 
 </RelativeLayout>
