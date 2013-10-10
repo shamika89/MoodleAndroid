@@ -6,7 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="LoginButton">Login</string>
     <color name="red">#CF2900</color>
-    <color name="bg_color">#E1E1E1</color>
+    <color name="bg_color">#AFAFAB</color>
     <string name="courses_view">Courses</string>
     <string name="back">Back</string>
     <string name="logout">Logout</string>

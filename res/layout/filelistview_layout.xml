@@ -16,9 +16,10 @@
         android:ellipsize="marquee"
         android:lines="1"
         android:paddingBottom="5dp"
-        android:paddingTop="12dp"
-        android:textColor="#3f3f3f"
-        android:textSize="15sp" >
+        android:paddingTop="6dp"
+        android:textColor="@color/black_color"
+        android:textSize="15sp"
+        android:textStyle="bold" >
     </TextView>
 
     <LinearLayout
@@ -29,10 +30,10 @@
         <TextView
             android:id="@+id/myFileDownloadStatus"
             android:layout_width="210dp"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:gravity="left"
             android:paddingBottom="2dp"
-            android:textColor="#797979"
+            android:textColor="#696947"
             android:textSize="10sp" />
 
         <LinearLayout

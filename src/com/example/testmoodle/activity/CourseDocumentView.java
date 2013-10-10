@@ -34,7 +34,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class CourseDocumentView extends Activity implements OnClickListener {
 	private User user;
 	private ListView courselist;
@@ -44,6 +43,7 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 	private ProgressBar loadingImage;
 	private TextView loadingText;
 	private LinearLayout downloadStatusLayout;
+	private LinearLayout emptyLayout, contentLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +55,9 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 		courseButton = (Button) findViewById(R.id.select_course);
 		logoutButton = (Button) findViewById(R.id.logout);
 		backButton = (Button) findViewById(R.id.back);
-		loadingImage=(ProgressBar) findViewById(R.id.LoadingProgressImage);
-		loadingText=(TextView) findViewById(R.id.LoadingProgressText);
-		downloadStatusLayout=(LinearLayout) findViewById(R.id.linearLayoutLoadingResourses);
+		loadingImage = (ProgressBar) findViewById(R.id.LoadingProgressImage);
+		loadingText = (TextView) findViewById(R.id.LoadingProgressText);
+		downloadStatusLayout = (LinearLayout) findViewById(R.id.linearLayoutLoadingResourses);
 		downloadStatusLayout.setVisibility(View.INVISIBLE);
 
 		Intent i = getIntent();
@@ -107,8 +107,6 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 										+ "/Documents/" + item.getFileName());
 								file.exists();
 
-								
-
 								long timeCreate = item.getTimeCreated() * 1000;
 								Date createDate = new Date(timeCreate);
 
@@ -152,121 +150,147 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 		}
 
 	}
-	
-	public void listDocuments(){
-		 List<Document> values = user.getCourse(user.getSelectedCourseID()).getDocument();
-		  
-		  if(values!=null && values.size()>0){
-		  MyAdapter adapter1= new MyAdapter(this, (ArrayList<Document>) values); //setting an adapter for listview
-		  courselist.setAdapter(adapter1);
-		  }else{
-			  downloadStatusLayout.setVisibility(View.VISIBLE);
-			  loadingImage.setVisibility(ProgressBar.GONE);
-			  loadingText.setText("No files found!");
-		  }
-		
+
+	public void listDocuments() {
+		List<Document> values = user.getCourse(user.getSelectedCourseID())
+				.getDocument();
+
+		emptyLayout = (LinearLayout) findViewById(R.id.course_document_empty);
+		contentLayout = (LinearLayout) findViewById(R.id.course_document_listview);
+		emptyLayout.setVisibility(View.INVISIBLE);
+		contentLayout.setVisibility(View.VISIBLE);
+
+		if (values != null && values.size() > 0) {
+			MyAdapter adapter1 = new MyAdapter(this,
+					(ArrayList<Document>) values); // setting an adapter for
+													// listview
+			courselist.setAdapter(adapter1);
+		} else {
+			emptyLayout.setVisibility(View.VISIBLE);
+			contentLayout.setVisibility(View.INVISIBLE);
+		}
+
 	}
-	
-	private class MyAdapter extends BaseAdapter { //create new adapter class
-	      private final Context context;
-	      private final ArrayList<Document> array;
 
-	      public MyAdapter(Context context, ArrayList<Document> array) {
-	        this.context = context;
-	        this.array = array;
-	      }
+	private class MyAdapter extends BaseAdapter { // create new adapter class
+		private final Context context;
+		private final ArrayList<Document> array;
 
-	    public int getCount() {
-	        return array.size();
-	    }
+		public MyAdapter(Context context, ArrayList<Document> array) {
+			this.context = context;
+			this.array = array;
+		}
 
-	    public Object getItem(int position) {
-	        return array.get(position);
-	    }
+		public int getCount() {
+			return array.size();
+		}
 
-	    public long getItemId(int position) {
-	        return position;
-	    }
+		public Object getItem(int position) {
+			return array.get(position);
+		}
 
-	     
+		public long getItemId(int position) {
+			return position;
+		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final Document values = array.get(position);
-			final int pos=position;
-			LayoutInflater inflater = (LayoutInflater) context .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			final int pos = position;
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View rowView;
 
-	        if (convertView == null) { 
-	            rowView = new View(context);
-	            rowView = inflater.inflate(R.layout.filelistview_layout, parent, false);
-	            
-	        } else {
-	            rowView = (View) convertView;
-	        }
-	    
-	       TextView myDocument = (TextView)rowView.findViewById(R.id.myFileName);
-	       TextView downloadState = (TextView)rowView.findViewById(R.id.myFileDownloadStatus);
-	       final  Button downloadButton= (Button) rowView.findViewById(R.id.myFileButton);
-	       downloadButton.setId(position + 10001000);
-	       
-	       //check whether the file is already existing 
-	       String courseDir = android.os.Environment
+			if (convertView == null) {
+				rowView = new View(context);
+				rowView = inflater.inflate(R.layout.filelistview_layout,
+						parent, false);
+
+			} else {
+				rowView = (View) convertView;
+			}
+
+			TextView myDocument = (TextView) rowView
+					.findViewById(R.id.myFileName);
+			TextView downloadState = (TextView) rowView
+					.findViewById(R.id.myFileDownloadStatus);
+			final Button downloadButton = (Button) rowView
+					.findViewById(R.id.myFileButton);
+			downloadButton.setId(position + 10001000);
+
+			// check whether the file is already existing
+			String courseDir = android.os.Environment
 					.getExternalStorageDirectory().getPath()
 					+ "/Moodle/"
 					+ courseName + "/";
 			File dir = new File(courseDir);
 			File[] files = dir.listFiles();
-			
-			if(files!=null){
-			
-			    	for(int i=0; i< user.getCourse(user.getSelectedCourseID())
-										.getDocument().size();i++){
-			    		for(File f: files){
-			    		if(f.getName().equals(user.getCourse(user.getSelectedCourseID())
-										.getDocument().get(position).getFileName())){
-			    			downloadButton.setText("Open");
-			    			downloadButton.setBackgroundResource(R.drawable.bluebtn);
-			    			break;
-			    		}else{
-			    			downloadButton.setText("Dowload");
-			    			downloadButton.setBackgroundResource(R.drawable.orangebtn);
-			    		}
-			    		}
-			    	}
-			    }
-			
-	       
-	        myDocument.setText(values.getFileName());
-	        downloadState.setText(values.getFileSizewithUnits()+ " "+ values.getTimeCreatedmodified());
-	     
-	       if (position % 2 != 0)
-				rowView.setBackgroundResource(R.drawable.listview_item_differentiate_color); //for differentiate listview items
+
+			if (files != null) {
+
+				for (int i = 0; i < user.getCourse(user.getSelectedCourseID())
+						.getDocument().size(); i++) {
+					for (File f : files) {
+						if (f.getName().equals(
+								user.getCourse(user.getSelectedCourseID())
+										.getDocument().get(position)
+										.getFileName())) {
+							downloadButton.setText("Open");
+							downloadButton
+									.setBackgroundResource(R.drawable.bluebtn);
+							break;
+						} else {
+							downloadButton.setText("Dowload");
+							downloadButton
+									.setBackgroundResource(R.drawable.orangebtn);
+						}
+					}
+				}
+			}
+
+			myDocument.setText(values.getFileName());
+			downloadState.setText(values.getFileSizewithUnits() + " "
+					+ values.getTimeCreatedmodified());
+
+			if (position % 2 != 0)
+				rowView.setBackgroundResource(R.drawable.listview_item_differentiate_color); // for
+																								// differentiate
+																								// listview
+																								// items
 
 			downloadButton.setClickable(true);
-			
+
 			downloadButton.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-					
-					String mimeType=null;
+
+					String mimeType = null;
 					if (downloadButton.getText().equals("Download")) {
 						downloadStatusLayout.setVisibility(View.VISIBLE);
 						downloadButton.setEnabled(false);
 						downloadButton
 								.setBackgroundResource(R.drawable.greenbtn);
-						new FileDownloadTask(CourseDocumentView.this).execute(values.getFileURL(),user.getToken(), values.getFileName(),courseName, downloadButton.getId(), loadingText.getId(), values.getFileSize(),this);
+						new FileDownloadTask(CourseDocumentView.this).execute(
+								values.getFileURL(), user.getToken(),
+								values.getFileName(), courseName,
+								downloadButton.getId(), loadingText.getId(),
+								values.getFileSize(), this);
 					} else {
 						int i = values.getFileName().lastIndexOf('.');
-    	                if (i > 0) {
-    	                	mimeType = values.getFileName().substring(i+1);
-    	                }
+						if (i > 0) {
+							mimeType = values.getFileName().substring(i + 1);
+						}
 						String fileUrl = android.os.Environment
 								.getExternalStorageDirectory().getPath()
-								+ "/Moodle/" + courseName + "/" + values.getFileName();
+								+ "/Moodle/"
+								+ courseName
+								+ "/"
+								+ values.getFileName();
 						File fileToBeOpened = new File(fileUrl);
-						nextPage = new Intent(android.content.Intent.ACTION_VIEW);
-						nextPage.setDataAndType(Uri.fromFile(fileToBeOpened),"application/"+mimeType);
+						nextPage = new Intent(
+								android.content.Intent.ACTION_VIEW);
+						nextPage.setDataAndType(Uri.fromFile(fileToBeOpened),
+								"application/" + mimeType);
 						nextPage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						try {
 							startActivity(nextPage);
@@ -274,16 +298,16 @@ public class CourseDocumentView extends Activity implements OnClickListener {
 							Toast.makeText(
 									getBaseContext(),
 									"No application found to open file type "
-											+ mimeType,
-									Toast.LENGTH_LONG).show();
+											+ mimeType, Toast.LENGTH_LONG)
+									.show();
 						}
 					}
-				
+
 				}
 			});
-	        return rowView;
+			return rowView;
 		}
-}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

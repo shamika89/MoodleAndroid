@@ -28,9 +28,11 @@
             android:layout_height="wrap_content"
             android:visibility="invisible" />
     </LinearLayout>
+    
+   
 
       <LinearLayout
-          android:id="@+id/linearLayoutlistview"
+          android:id="@+id/course_document_listview"
           android:layout_above="@+id/footer_view" 
           android:layout_below="@+id/linearLayoutLoadingResourses"
           android:layout_width="fill_parent"
@@ -53,7 +55,21 @@
 
     </LinearLayout>
     
-   
+    <LinearLayout 
+        android:id="@+id/course_document_empty" 
+        android:layout_above="@+id/footer_view"        
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical"	    
+       >
+        
+	    <TextView    	        
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"     
+	        android:text="@string/empty_content"
+	        android:textColor="@color/red"
+	        android:gravity="center"/>
+    </LinearLayout>
 
     <include
         android:id="@+id/footer_view"

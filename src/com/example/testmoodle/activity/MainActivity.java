@@ -87,12 +87,15 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.loginButton:
-			dialog = ProgressDialog.show(this, "", "Please Wait....", true);
-			dialog.setCancelable(true);
-
+			login.setEnabled(false);
 			siteURLVal = siteURl.getText().toString();
 			passwordVal = password.getText().toString();
 			usernameVal = username.getText().toString();
+			
+			dialog = ProgressDialog.show(this, "", "Please Wait....", true);
+			dialog.setCancelable(true);
+
+			
 
 			if (AppStatus.getInstance(this).isOnline(this)) { // check whether
 																// the
@@ -134,7 +137,7 @@ public class MainActivity extends Activity implements OnClickListener {
 						Toast.LENGTH_LONG).show();
 				messageHandler.sendEmptyMessage(0);
 			}
-
+			
 			break;
 
 		case R.id.OfflineButton:
@@ -153,6 +156,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		default:
 			break;
 		}
+		
 
 	}
 
@@ -239,26 +243,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	/*
-	 * public void getAssignmentInfo() throws UnsupportedEncodingException{
-	 * //get user's enrolled courses String serverurl = siteURLVal +
-	 * "/webservice/rest/server.php" + "?wstoken=" + token + "&wsfunction=";
-	 * String assignmentFunction=WebserviceFunction.mod_assign_get_assignments;
-	 * if(user.getCourses().size()>0){ for(int i=0;
-	 * i<user.getCourses().size();i++){ Course c=user.getCourses().get(i);
-	 * ArrayList<Assignment> assignment=new ArrayList<Assignment>();
-	 * c.setAssignment(assignment);
-	 * 
-	 * String id= String.valueOf(c.getId()); String assignUrlParameters=
-	 * "courseids[0]="+URLEncoder.encode(id, "UTF-8"); new
-	 * WebServiceCommunicator(this, this).execute(serverurl, assignmentFunction,
-	 * assignUrlParameters, user, R.raw.assignments );
-	 * 
-	 * } }
-	 * 
-	 * }
-	 */
-
+	
 	public ArrayList<Course> getCourses() {
 		return courses;
 	}

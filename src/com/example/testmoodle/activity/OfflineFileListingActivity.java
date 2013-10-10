@@ -26,7 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class OfflineFileListingActivity extends Activity implements OnClickListener {
+public class OfflineFileListingActivity extends Activity implements
+		OnClickListener {
 
 	String courseFolderName;
 	private ArrayList<String> offlineFileName = new ArrayList<String>();
@@ -40,7 +41,7 @@ public class OfflineFileListingActivity extends Activity implements OnClickListe
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.offline_file_listing);
-		
+
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			return;
@@ -52,73 +53,75 @@ public class OfflineFileListingActivity extends Activity implements OnClickListe
 				+ "/Moodle/"
 				+ courseFolderName + "/");
 		ListFiles(root);
-		backButton=(Button) findViewById(R.id.back);
+		backButton = (Button) findViewById(R.id.back);
 		backButton.setOnClickListener(this);
 	}
 
 	public void ListFiles(File f) {
-		
+
 		File[] files = f.listFiles();
 		offlineFileName.clear();
 		offlineFileDateModified.clear();
 		offlineFileSize.clear();
-		if(files!=null){
-		for (File file : files) {
-			if (!(file.isDirectory())) {
-				int startIndex;
-				int endIndex;
-				String fileName = file.toString();
-				startIndex = fileName.lastIndexOf("/") + 1;
-				endIndex = fileName.length();
-				fileName = fileName.substring(startIndex, endIndex);
-				File fileLocationPath = new File(f + "/" + fileName);
-				if (fileName != ".android_secure" && fileName != "LOST.DIR") {
-					// Getting the size of file
-					long fileSize = fileLocationPath.length();
-					String fileSizeInfo;
-					if (fileSize > (1024 * 1024))
-						fileSizeInfo = fileSize / (1024 * 1024) + "MB";
-					else if (fileSize > 1024)
-						fileSizeInfo = fileSize / 1024 + "KB";
-					else
-						fileSizeInfo = fileSize + "Bytes";
+		if (files != null) {
+			for (File file : files) {
+				if (!(file.isDirectory())) {
+					int startIndex;
+					int endIndex;
+					String fileName = file.toString();
+					startIndex = fileName.lastIndexOf("/") + 1;
+					endIndex = fileName.length();
+					fileName = fileName.substring(startIndex, endIndex);
+					File fileLocationPath = new File(f + "/" + fileName);
+					if (fileName != ".android_secure" && fileName != "LOST.DIR") {
+						// Getting the size of file
+						long fileSize = fileLocationPath.length();
+						String fileSizeInfo;
+						if (fileSize > (1024 * 1024))
+							fileSizeInfo = fileSize / (1024 * 1024) + "MB";
+						else if (fileSize > 1024)
+							fileSizeInfo = fileSize / 1024 + "KB";
+						else
+							fileSizeInfo = fileSize + "Bytes";
 
-					// Last modified date of the folder...
-					Date lastModDate = new Date(fileLocationPath.lastModified());
-					SimpleDateFormat format = new SimpleDateFormat(
-							"MM/dd/yyyy hh:mm a");
-					String lastModDateformatted = format.format(lastModDate);
+						// Last modified date of the folder...
+						Date lastModDate = new Date(
+								fileLocationPath.lastModified());
+						SimpleDateFormat format = new SimpleDateFormat(
+								"MM/dd/yyyy hh:mm a");
+						String lastModDateformatted = format
+								.format(lastModDate);
 
-					offlineFileName.add(fileName);
-					offlineFileDateModified.add(lastModDateformatted);
-					offlineFileSize.add(fileSizeInfo);
+						offlineFileName.add(fileName);
+						offlineFileDateModified.add(lastModDateformatted);
+						offlineFileSize.add(fileSizeInfo);
 
+					}
 				}
+				listFilesInListView(offlineFileName, offlineFileDateModified,
+						offlineFileSize);
 			}
-			listFilesInListView(offlineFileName, offlineFileDateModified,
-					offlineFileSize);
-		}
 		}
 	}
 
 	public void listFilesInListView(ArrayList<String> offlineFileName,
 			ArrayList<String> offlineFileDateModified,
 			ArrayList<String> offlineFileSize) {
-		emptyLayout=(LinearLayout) findViewById(R.id.offlinne_files_empty);
-		contentLayout=(LinearLayout) findViewById(R.id.offline_file_listview);
+		emptyLayout = (LinearLayout) findViewById(R.id.offlinne_files_empty);
+		contentLayout = (LinearLayout) findViewById(R.id.offline_file_listview);
 		emptyLayout.setVisibility(View.INVISIBLE);
 		contentLayout.setVisibility(View.VISIBLE);
-		
+
 		ListView listView = (ListView) findViewById(R.id.myOfflineFiles);
-		if(offlineFileName!=null && offlineFileName.size()>0){
-		MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this,
-				offlineFileName, offlineFileDateModified, offlineFileSize);
-		// Assign adapter to ListView
-		listView.setAdapter(adapter);
-		}else{
-			  emptyLayout.setVisibility(View.VISIBLE);
-			  contentLayout.setVisibility(View.INVISIBLE);
-		  }
+		if (offlineFileName != null && offlineFileName.size() > 0) {
+			MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this,
+					offlineFileName, offlineFileDateModified, offlineFileSize);
+			// Assign adapter to ListView
+			listView.setAdapter(adapter);
+		} else {
+			emptyLayout.setVisibility(View.VISIBLE);
+			contentLayout.setVisibility(View.INVISIBLE);
+		}
 	}
 
 	public class MySimpleArrayAdapter extends ArrayAdapter<String> {
@@ -196,37 +199,6 @@ public class OfflineFileListingActivity extends Activity implements OnClickListe
 				}
 			});
 
-			rowView.setOnClickListener(new OnClickListener() {
-
-				public void onClick(View v) {
-					String fileUrl = android.os.Environment
-							.getExternalStorageDirectory().getPath()
-							+ "/Moodle/"
-							+ courseFolderName
-							+ "/"
-							+ textViewFileName.getText().toString();
-					int startIndex = fileUrl.lastIndexOf(".") + 1;
-					int endIndex = fileUrl.length();
-					String fileExtension = fileUrl.substring(startIndex,
-							endIndex);
-					File fileToBeOpened = new File(fileUrl);
-					nextPage = new Intent();
-					nextPage.setAction(android.content.Intent.ACTION_VIEW);
-					nextPage.setDataAndType(Uri.fromFile(fileToBeOpened),
-							"application/" + fileExtension);
-					try {
-						startActivity(nextPage);
-					} catch (ActivityNotFoundException e) {
-						Toast.makeText(
-								getBaseContext(),
-								"No application found to open file type\n"
-										+ fileExtension, Toast.LENGTH_LONG)
-								.show();
-					}
-
-				}
-			});
-
 			fileDeleteButton.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
@@ -265,20 +237,17 @@ public class OfflineFileListingActivity extends Activity implements OnClickListe
 
 	@Override
 	public void onClick(View v) {
-	switch(v.getId()) {		
-		
+		switch (v.getId()) {
+
 		case R.id.back:
 			nextPage = new Intent(this, OfflieFolderListigActivity.class);
 			startActivity(nextPage);
 			break;
-		
-			default:
-			
-	}
-		
-	}
 
-	
-	
+		default:
+
+		}
+
+	}
 
 }
